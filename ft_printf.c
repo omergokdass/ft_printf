@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: ogokdas <ogokdas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:33:39 by ogokdas           #+#    #+#             */
-/*   Updated: 2025/07/01 21:33:39 by ogokdas          ###   ########.fr       */
+/*   Updated: 2025/07/03 20:49:33 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ int	ft_format(va_list args, char c)
 	else if (c == 'x' || c == 'X')
 		return (ft_hex(va_arg(args, unsigned int), c));
 	else if (c == 'p')
-		return (ft_point(va_arg(args, unsigned long), 1));
+		return (ft_point((unsigned long)va_arg(args, void *), 1));
 	else if (c == '%')
 		return (ft_putchar('%'));
-	else
-		return (0);
+	return (ft_putchar('%') && ft_putchar(c));
 }
 
 int	ft_printf(const char *str, ...)
@@ -48,10 +47,15 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	while (str[i])
 	{
-		if (str[i] == '%' && str[i + 1] != '\0')
+		if (str[i] == '%')
 		{
-			len += ft_format(args, str[i + 1]);
-			i++;
+			if (str[i + 1] != '\0')
+			{
+				len += ft_format(args, str[i + 1]);
+				i++;
+			}
+			else
+				return (-1);
 		}
 		else
 			len += ft_putchar(str[i]);
