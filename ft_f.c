@@ -49,8 +49,8 @@ int	ft_uint(unsigned int n)
 	ret = 0;
 	if (n >= 10)
 		ret += ft_uint(n / 10);
-	write(1, &"0123456789"[n % 10], 1);
-	return (ret + 1);
+	ret += write(1, &"0123456789"[n % 10], 1);
+	return (ret);
 }
 
 int	ft_hex(unsigned int n, char c)

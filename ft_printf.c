@@ -34,7 +34,6 @@ int	ft_format(va_list args, char c)
 	else if (c == '%')
 		return (ft_putchar('%'));
 	return (ft_putchar('%') + ft_putchar(c));
-	
 }
 
 int	ft_printf(const char *str, ...)
